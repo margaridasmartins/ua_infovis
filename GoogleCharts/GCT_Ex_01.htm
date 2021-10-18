@@ -35,12 +35,20 @@ function drawChart( )
 	// Create the data table.
 	var data = new google.visualization.DataTable( );
 
+	// Create the data table.
+	var data_deti = new google.visualization.DataTable( );
+
 
 	// First column
 	data.addColumn('string', 'Curricular year');
+	data_deti.addColumn('string', 'Curricular year');
 
 	// Second column
 	data.addColumn('number', 'Number of Students');
+	data_deti.addColumn('number', 'MIEET');
+	data_deti.addColumn('number', 'MIECT');
+	data_deti.addColumn('number', 'LTSI');
+	data_deti.addColumn('number', 'LEI');
 
 	data.addRows([
 				['1st year', 79],
@@ -51,18 +59,89 @@ function drawChart( )
 
 	]);
 
+
+	// DETI data 
+	data_deti.addRows([
+		 ['2007', 328, 589, 115, 0],
+	['2008', 361, 605, 223, 0],
+	['2009', 400, 365, 152, 0], 
+	['2010', 360, 357, 129, 0],
+	['2011', 325, 316, 96, 0],
+	['2012', 394, 344, 93, 0],
+	['2013', 404, 294, 102, 0],
+	['2014', 271, 307, 0, 501],
+	['2015', 402, 291, 0, 843],
+	['2016', 367, 337, 0, 802],
+	['2017', 407, 399, 0, 691] 
+	]);
+
 	// Set chart configuration options
 	var options = {
 			title : 'UA - MIECT - Students by curricular year',
-			width : 400,
-			height : 300
+			width : 800,
+			height : 600,
+			is3D: true
 	};
+
+	// Set bar chart configuration options
+	var bar_options = {
+			title : 'UA - MIECT - Students by curricular year',
+			width : 800,
+			height : 600,
+			legend: { position: "none" },
+			hAxis:{
+				minValue: 0,
+				title: "Number of students"
+			}
+
+	};
+
+	// Set collum chart configuration options
+	var collum_options = {
+			title : 'UA - MIECT - Students by curricular year',
+			width : 800,
+			height : 600,
+			legend: { position: "none" },
+			vAxis:{
+				minValue: 0,
+				title: "Number of students"
+			}
+
+	};
+
+	// Set collum chart configuration options
+	var deti_collum_options = {
+		title : 'DETI Students by course',
+		width : 800,
+		height : 600,
+
+	};
+
+	var deti_combo_options = {
+		title : 'DETI Students by course',
+		width : 800,
+		height : 600,
+		seriesType: 'bars',
+        series: {4: {type: 'line'}}
+	};
+
 
 	// Instantiate the pie chart.
 	var chart = new google.visualization.PieChart( document.getElementById('chart_div') );
-	debugger;
+	var bar_chart = new google.visualization.BarChart( document.getElementById('bar_chart_div') );
+	var collum_chart = new google.visualization.ColumnChart( document.getElementById('collum_chart_div') );
+	var deti_collum_chart = new google.visualization.ColumnChart( document.getElementById('deti_collum_chart_div') );
+	var deti_line_chart = new google.visualization.LineChart(document.getElementById('deti_line_chart_div'));
+	var deti_combo_chart = new google.visualization.ComboChart(document.getElementById('deti_combo_chart_div'));
+
+
 	// Draw the chart, passing in some configuration options.
 	chart.draw(data, options);
+	bar_chart.draw(data, bar_options);
+	collum_chart.draw(data, collum_options);
+	deti_collum_chart.draw(data_deti, deti_collum_options)
+	deti_line_chart.draw(data_deti,deti_collum_options)
+	deti_combo_chart.draw(data_deti,deti_combo_options)
 
 } // drawChart( )
 
@@ -71,7 +150,25 @@ function drawChart( )
 
 <body>
 <!--Div that will hold the pie chart-->
-<div id="chart_div" style="width:400; height:300"></div>
+<div id="chart_div" style="width:800; height:600"></div>
+
+
+<!--Div that will hold the bar chart-->
+<div id="bar_chart_div" style="width:800; height:600"></div>
+
+
+<!--Div that will hold the collum chart-->
+<div id="collum_chart_div" style="width:800; height:600"></div>
+
+<!--Div that will hold the collum chart-->
+<div id="deti_collum_chart_div" style="width:800; height:600"></div>
+
+<!--Div that will hold the line chart-->
+<div id="deti_line_chart_div" style="width:800; height:600"></div>
+
+<!--Div that will hold the combo chart-->
+<div id="deti_combo_chart_div" style="width:800; height:600"></div>
+
 </body>
 
 </html>
