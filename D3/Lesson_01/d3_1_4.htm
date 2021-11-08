@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>First D3 Example</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+    </head>
+
+    <body>
+        <style type="text/css">
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px; /* Overriden by D3-assigned height on script */
+                margin-right: 2px;
+                background-color: teal;
+            }
+        </style>
+        <script type="text/javascript">
+
+            let dataset = [ 5, 10, 15, 20, 25, 30, 35];
+
+            d3.select("body").selectAll("div")
+                .data(dataset)
+                .join("div")
+                .attr("class", "bar")
+                .style("height", function(d) {
+                    return d*10 + "px";
+                }).style('margin-right', "10px")
+                .style('color', 'white')
+                .style('text-align', 'center');
+                
+
+        </script>
+    </body>
+
+</html>
