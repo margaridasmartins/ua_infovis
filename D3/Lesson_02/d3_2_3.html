@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <div > 
+        <div class="div_d3"> </div>
+        <div > 
+            <button id="sort_button" style="position: absolute;"> Sort </button>
+        </div> 
+    </div> 
+    
+    
+
+    <script type="text/javascript">
+
+        let w = 500;
+        let h = 200;
+
+
+        let svg = d3.select("body").append("svg")
+                    .attr("width", w)
+                    .attr("height", h);
+
+
+        let dataset = [5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25];
+
+        let rects = svg.selectAll("rect")
+                        .data(dataset)
+                        .join("rect")
+                            .attr("x", function(d,i){
+                                return i*(w/dataset.length);
+                            })
+                            .attr("y", function(d){
+                                return h-(d*4)
+                            })
+                            .attr("width", function(){
+                                return (w / dataset.length - 1);
+                            })
+                            .attr("height", function(d){
+                                return d*4
+                            })
+                            .attr("fill", function(d){
+                                return "rgb(0, 0, " + (d * 10) + ")"
+                            });
+
+        //d3.selectAll("rect").
+
+        let text = svg.selectAll("text")
+                        .data(dataset)
+                        .join("text")
+                            .text(function (d) {
+                                return d;
+                            })
+                            .attr("x", function (d, i) {
+                                    return i * (w / dataset.length) + (w / dataset.length)/2;
+                            })
+                            .attr("y", function (d) {
+                                return h - (d * 4) + 15; // padding
+                            })
+                            .attr("stroke", "white")
+                            .attr("text-anchor","middle");
+
+                            
+        rects.on("click", function(e, d) { // event, data
+            console.log("The value is "+ d);
+        });
+
+        //Define sort order flag
+        let sortOrder = false;
+
+        //Define sort function
+        let sortBars = function() {
+            //Flip value of sortOrder
+            sortOrder = !sortOrder;
+
+            svg.selectAll("rect")
+                .sort(function(a, b) {
+                    if (sortOrder) {
+                        return d3.ascending(a, b);
+                    } else {
+                        return d3.descending(a, b);
+                    }
+                })
+                .transition()
+                    .delay(function(d){
+                        return d*50;
+                    })
+                    .duration(1000).ease(d3.easeCubic)
+                    .attr("x", function(d, i) {
+                        return i * (w / dataset.length);
+                    });
+        };
+
+        let sortText = function(){
+            svg.selectAll("text")
+                .sort(function(a, b) {
+                    if (sortOrder) {
+                        return d3.ascending(a, b);
+                    } else {
+                        return d3.descending(a, b);
+                    }
+                })
+                .transition()
+                    .delay(function(d){
+                        return d*50;
+                    })
+                    .duration(1000).ease(d3.easeCubic)
+                    .attr("x", function(d, i) {
+                        return i * (w / dataset.length);
+                    }).attr("x", function (d, i) {
+                        return i * (w / dataset.length) + (w / dataset.length)/2;
+                    })
+                    .attr("y", function (d) {
+                        return h - (d * 4) + 15; // padding
+                    });
+                
+        };
+
+        d3.select("#sort_button").on("click", function(e,d) {
+            sortBars();
+            sortText();
+        })
+
+    </script>
+</body>
+</html>

@@ -11,7 +11,7 @@
     <script type="text/javascript">
 
         let w = 500;
-        let h = 50;
+        let h = 200;
 
         let svg = d3.select("body").append("svg")
                     .attr("width", w)
@@ -23,10 +23,21 @@
             .data(dataset)
             .join("circle");
 
-        circles.attr("cx", "10")
-            .attr("cy", "10")
-            .attr("r", "10");
-    
+        circles.attr("cx", function (d, i) { // data, index
+                    return (i * 50) + 25;
+                    })
+                .attr("cy", h/4)
+                .attr("r",function (d) {
+                    return d;
+                });
+
+
+        svg.append('circle')
+            .attr("cx", 300)
+            .attr("cy", 150)
+            .attr("r", 50)
+            .attr("fill", "teal")
+
     </script>
 </body>
 </html>
