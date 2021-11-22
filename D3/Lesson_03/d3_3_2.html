@@ -1,0 +1,27 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v6.js"></script>
+    <script>
+        let width = 500;
+        let height = 300;
+        let margin = 50;
+        
+        function draw(data) {
+            // Reuse the visualization code from scatterplot
+            // Change d[0] and d[1] as specified below
+        }
+    </script>
+</head>
+
+<body>
+    <script>
+        d3.json("MIECT_Alunos_Ano.json")
+            .then(draw)
+            .catch(function(err){console.log(err)});
+    </script>
+</body>
+
+</html>
