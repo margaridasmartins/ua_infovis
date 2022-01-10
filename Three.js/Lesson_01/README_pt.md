@@ -59,12 +59,37 @@ function render() {
 cube.rotation.x += 0.1;
 cube.rotation.y += 0.1;
 ```
+
+## Primitiva 2D
+Altere o exemplo anterior para visualizar um triângulo 2D preto sobre um fundo vermelho (com os vértices nas coordenadas -1,-1,0 / 1,-1,0 / 1,1,0).
+Para adicionar vértices a uma malha use o código seguinte:
+
+``` html
+var geometry = new THREE.BufferGeometry();
+
+const vertices = new Float32Array( [
+	-1.0, -1.0,  -5.0,
+	1.0, -1.0,  -5.0,
+	1.0,  1.0,  -5.0,
+] );
+
+geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+```
+
+Crie ainda o material adequado para que o triângulo seja preto e que a cor de fundo passe a ser vermelha (use a função setClearColor do Renderer).
+Modifique o código para obter a mesma cena sem ter que modificar a posição da câmara.
+
 ## Adição de cor
 Para permitir o mapeamento de uma cor diferente em cada vértice é necessário associar uma cor a cada vértice. Tal pode ser feito da forma seguinte:
 
 ``` html
-geometry.faces[0].vertexColors[0] = new THREE.Color(0xFF0000)
+var colors = new Uint8Array( [
+	 255,  0,  0,  
+	 0,  255,  0,  
+	 0,  0,  255,  
+] );
 
+geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3, true) );
 ```
 Sendo depois criado um material baseado nessa informação:
 ``` html
@@ -99,7 +124,4 @@ window.addEventListener('resize', function () {
 ## Outras primitivas
 Modifique o código para visualizar o cube em wireframe.
 Consulte outras geometrias disponíveis (Extras / Geometries) e tente visualizar outras geometrias alterando os seus parâmetros. 
-
-## Exercício extra
-Tente Criar um hexagono especificando as suas coordenadas dentro de um THREE.Vector3(). 
 
