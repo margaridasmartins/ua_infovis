@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+        <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth /
+                window.innerHeight, 0.1, 1000 );
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            renderer.setClearColor( 0xffffff );
+            document.body.appendChild( renderer.domElement );
+
+            var geometry = new THREE.BoxGeometry(1,1,1);
+            var material = new THREE.MeshBasicMaterial( {color: 0x006088, opacity: 0.5, transparent: true } );
+            const box = new THREE.Mesh( geometry, material );
+            box.position.set(0, 0, 0)
+            box.scale.set(2, 1, 4)
+
+
+            var geometry = new THREE.CylinderGeometry(0.5,0.5,0.2,32);
+            geometry.rotateZ(Math.PI * -0.5); 
+            var material = new THREE.MeshBasicMaterial( {color: 0xff2222, opacity: 0.5, transparent: true } );
+
+            const wheel = new THREE.Mesh( geometry, material ); 
+            wheel.position.set(1, -0.5, 2)
+
+            const wheel1 = new THREE.Mesh( geometry, material ); 
+            wheel1.position.set(-1, -0.5, 2)
+
+            const wheel2 = new THREE.Mesh( geometry, material ); 
+            wheel2.position.set(-1, -0.5, -2)
+
+            const wheel3 = new THREE.Mesh( geometry, material ); 
+            wheel3.position.set(1, -0.5, -2)
+
+            car = new THREE.Object3D();
+            car.add( box );
+            car.add( wheel );
+            car.add( wheel1 );
+            car.add( wheel2 );
+            car.add( wheel3 );
+
+            scene.add( car );
+
+            //Axis
+            //X
+            var geometry = new THREE.CylinderGeometry(0.1,0.1,1,32);
+            geometry.rotateZ(Math.PI * -0.5); 
+            
+            var material = new THREE.MeshBasicMaterial({color: 0xff0000});
+            
+
+            var axis_X = new THREE.Mesh( geometry, material ); 
+            axis_X.position.set(0.5,0,0)
+
+            //Y
+            var geometry = new THREE.CylinderGeometry(0.1,0.1,1,32);
+            geometry.rotateY(Math.PI * -0.5); 
+            
+            var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+            
+
+            var axis_Y = new THREE.Mesh( geometry, material ); 
+            axis_Y.position.set(0,0.5,0)
+
+            //Z
+            var geometry = new THREE.CylinderGeometry(0.1,0.1,1,32);
+            geometry.rotateX(Math.PI * -0.5); 
+            
+            var material = new THREE.MeshBasicMaterial({color: 0x0000ff});
+            
+
+            var axis_Z = new THREE.Mesh( geometry, material ); 
+            axis_Z.position.set(0,0,0.5)
+
+
+            axis = new THREE.Object3D();
+            axis.add( axis_X );
+            axis.add( axis_Y );
+            axis.add( axis_Z );
+
+            scene.add(axis)
+            
+
+            camera.position.z = 5;
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            function render() {
+                requestAnimationFrame(render);
+                car.rotation.y += 0.01;
+                axis.rotation.y += 0.01;
+                renderer.render(scene, camera);
+                controls.update();
+            }
+            render();
+		</script>
+	</body>
+</html>
