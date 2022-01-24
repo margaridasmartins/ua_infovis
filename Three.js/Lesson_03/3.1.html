@@ -17,13 +17,18 @@
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
-            var geometry = new THREE.BoxGeometry(1,1,1);
-            var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true });
-            var cube = new THREE.Mesh( geometry, material );
-            scene.add( cube );
+            var texloader = new THREE.TextureLoader();
+            var tex=texloader.load("images/lena.jpg");
+
+            var geometry = new THREE.PlaneGeometry(5,5);
+            var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, map: tex});
+            var plane = new THREE.Mesh( geometry, material );
+            scene.add( plane );
             camera.position.z = 5;
 
             function render() {
+                plane.rotation.x += 0.01;
+                plane.rotation.y += 0.01;
                 requestAnimationFrame(render);
                 renderer.render(scene, camera);
             }
