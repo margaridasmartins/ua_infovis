@@ -46,7 +46,7 @@
             material_moon.needsUpdate = true;
             var geometry_moon = new THREE.SphereGeometry(1,32,32);
             var sphere_moon = new THREE.Mesh( geometry_moon, material_moon );
-            scene.add( sphere_moon );
+            sphere.add( sphere_moon );
             
             var distance = DISTANCE_FROM_EARTH / EARTH_RADIUS;
             sphere_moon.position.set(Math.sqrt(distance / 2), 0,-Math.sqrt(distance / 2));
